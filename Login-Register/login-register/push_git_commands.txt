@@ -1,0 +1,24 @@
+cd "D:\VirtualBookstore\Login-Register\login-register"
+
+# Initialize git repo
+git init
+
+# Add all files to staging
+git add .
+
+# Commit with message about login/register changes and recommended books UI
+git commit -m "feat: implement login system, book recommendations, external CSS styling, button gap fixes
+
+- Updated Book.jsx with proper image loading and error handling
+- Added HomePage with recommendation cards below welcome message  
+- Moved component styles to separate CSS files (Book.css)
+- Implemented user auth check before showing recommendations
+- Fixed delete/update button spacing for admin section"
+
+# Add remote origin if not already set (first time repo setup)
+git remote add origin https://github.com/YOUR-GITHUB-USERNAME/VirtualBookstore.git 2>/dev/null || echo "Remote already configured"
+
+# Force push all changes to main branch
+git push -u origin main --force
+
+echo "✓ Pushed successfully!"

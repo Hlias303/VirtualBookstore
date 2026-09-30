@@ -1,0 +1,71 @@
+body {
+  background-color: rgb(221, 217, 212);
+}
+
+.Center {
+  min-height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 0;
+}
+
+.recommendations {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.recommendations h2 {
+  font-size: 2.5rem;
+  color: #4a4a4a;
+  margin-bottom: 1rem;
+}
+
+.book-cards {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.book-card {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  min-width: 200px;
+  cursor: pointer;
+  transition: box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.book-card:hover {
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.book-thumb {
+  width: 120px;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(45deg, #f0f0f0, #ffffff);
+}
+
+h3 {
+  font-size: 1.2rem;
+  color: #333;
+  margin: 0.5rem 0 0.25rem 0;
+}
+
+.price {
+  color: #e9b456;
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+.Center h1 {
+  font-size: 3rem;
+  color: #3a3a3a;
+}

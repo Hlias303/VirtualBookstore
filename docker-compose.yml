@@ -1,0 +1,72 @@
+version: "3.8"
+
+services:
+  # ================================
+  # Frontend Service (React Login/Register)
+  # ================================
+  frontend:
+    build:
+      context: ./Login-Register
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"        # Access frontend at http://localhost:80
+    networks:
+      - my_network
+    depends_on:
+      - backend
+
+  # ================================
+  # Backend Service (Spring Boot API)
+  # ================================
+  backend:
+    build: .
+    ports:
+      - "8085:8080"    # Access backend at http://localhost:8085/8090 (adjust as needed)    
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/BookStore
+      SPRING_DATASOURCE_USERNAME: ilias
+      SPRING_DATASOURCE_PASSWORD: 1234
+      # Backend needs to know how to reach the frontend or direct API access
+    networks:
+      - my_network
+    depends_on:
+      - postgres
+
+  # ================================
+  # Database Service (PostgreSQL)
+  # ================================
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ilias
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: BookStore
+    ports:
+      - "5433:5432"    
+    networks:
+      - my_network
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # ================================
+  # API Gateway (Optional - for unified access)
+  # If you want a single entry point combining both frontend and backend
+  # gateway:
+  #   image: nginx:alpine
+  #   ports:
+  #     - "80:80"
+  #   depends_on:
+  #     - frontend
+  #     - backend
+  #   extra_hosts:
+  #     - "host.docker.internal:host-gateway"
+  #   volumes:
+  #     - ./nginx-gateway.conf:/etc/nginx/conf.d/default.conf:ro
+  
+networks:
+  my_network:
+    driver: bridge
+
+volumes:
+  postgres_data:
