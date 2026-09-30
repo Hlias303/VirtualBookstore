@@ -9,7 +9,6 @@ import java.util.List;
 /**
  * Response returned by POST /login.
  * Carries the JWT plus the user's real roles loaded from the database,
- * so the frontend never has to guess/hardcode who is an admin.
  */
 @Data
 @NoArgsConstructor
