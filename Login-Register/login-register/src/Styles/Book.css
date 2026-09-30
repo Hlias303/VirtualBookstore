@@ -3,6 +3,7 @@
   display: flex;
   gap: 2rem; /* space between image and description */
   padding: 2rem;
+  align-items: flex-start;
 }
 
 .left-column-img {
@@ -10,6 +11,8 @@
   height: auto;
   max-height: 500px;
   min-width: 150px;
+  object-fit: contain; /* preserves aspect ratio when max-height clamps */
+  display: block;
 }
 
 /* Hide images if src is empty or null */

@@ -8,29 +8,42 @@ function Header() {
     
     const navigate = useNavigate();
     const cookies = new Cookies();
-    
-    const token = cookies.get('token');
-    console.log("cookies :",token);
-    const {role,SetRole} = useContext(userContext);
 
+    // Keep token in STATE (not just read-once) so UI updates immediately on login/logout
+    const [token, setToken] = useState(() => cookies.get('token'));
 
-    // Clear cookie when it expires/gets removed from another place
+    const {role, SetRole} = useContext(userContext) || {};
+
+    console.log("cookies :", token);
+
+    // Keep state in sync with the cookie whenever role changes (e.g. after login)
     useEffect(() => {
-        if (!token) {
-            SetRole(null);   // If token cleared elsewhere (e.g. backend rejected request), also clear client state
+        setToken(cookies.get('token'));
+    }, [role]);
+
+    // Clear role when token disappears (e.g. removed elsewhere)
+    useEffect(() => {
+        if (!token && typeof SetRole === 'function') {
+            SetRole(null);
         }
     }, [token]);
 
-    const Logout = (e) =>{
+    const Logout = (e) => {
         e.preventDefault();
 
-        // Clear cookie and role BEFORE navigating (fixes race condition when page might re-render with old auth)
-        cookies.remove('token',{ path: '/' });
-        
-        // Reset user state  
-        SetRole(null);
-        
-        navigate('/');  // Go home route instead of /User which redirects to / anyway 
+        // Remove the cookie (with and without explicit path, to cover how it was set)
+        cookies.remove('token', { path: '/' });
+        cookies.remove('token');
+
+        // Update local state -> header re-renders and switches to "Login"
+        setToken(undefined);
+
+        // Reset user role (also clears localStorage via ContextProvider wrapper)
+        if (typeof SetRole === 'function') {
+            SetRole(null);
+        }
+
+        navigate('/');
     }
 
     return (<nav className='nav'>

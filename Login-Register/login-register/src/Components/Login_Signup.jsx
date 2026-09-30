@@ -40,7 +40,7 @@ export default function Login_Signup() {
             else{
                 // Backend returns { token, username, roles } with the real roles from the DB
                 const { token, roles } = response.data;
-                cookies.set("token",token);
+                cookies.set("token", token, { path: '/' });
                 SetRole(roles.includes("ADMIN") ? "Admin" : "User");
                 console.log(token) 
                 alert("Login Succesfull");

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import * as React from 'react'
 import ListEmployees from './Components/ListEmployees'
 import Header from './Components/Header'
 import Footer from './Components/Footer'
@@ -13,26 +14,29 @@ import Register from './Components/Register'
 import Book from './Components/Book'
 import AddBook from './Components/AddBook'
 import UpdateBook from './Components/UpdateBook'
+import { ContextProvider } from './Context/ContextProvider.jsx'
 
 function App() { 
   return (
     <Router>
-      <Header/>
-        <Routes>        
-          {/* Public routes */}
-          <Route path="/" element={<HomePage/>}/>
-          <Route path="/Home" element={<HomePage/>}/>
-          <Route path ="/Users" element ={<ListEmployees/>}/>
-          <Route path="/Login" element={<Login_Signup/>}/>
-          <Route path="/Register" element={<Register/>}/>
-          <Route path="/Books" element={<BookList/>}/>
-          
-          {/* Book detail page */}
-          <Route path="/Books/:id" element={<Book/>}/>
-          <Route path="/AddBookImage" element={<AddBook/>}/>
-          <Route path="/BookUpdate/:id" element={<UpdateBook/>}/>
-        </Routes>
-      <Footer/>
+      <ContextProvider>
+        <Header/>
+          <Routes>        
+            {/* Public routes */}
+            <Route path="/" element={<HomePage/>}/>
+            <Route path="/Home" element={<HomePage/>}/>
+            <Route path ="/Users" element ={<ListEmployees/>}/>
+            <Route path="/Login" element={<Login_Signup/>}/>
+            <Route path="/Register" element={<Register/>}/>
+            <Route path="/Books" element={<BookList/>}/>
+            
+            {/* Book detail page */}
+            <Route path="/Books/:id" element={<Book/>}/>
+            <Route path="/AddBookImage" element={<AddBook/>}/>
+            <Route path="/BookUpdate/:id" element={<UpdateBook/>}/>
+          </Routes>
+        <Footer/>
+      </ContextProvider>
     </Router>
   );
 }
