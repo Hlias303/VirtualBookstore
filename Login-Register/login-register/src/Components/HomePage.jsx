@@ -16,8 +16,8 @@ function HomePage() {
 
     const loadRecommendations = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/Books");
-        setRecommendedBooks(response.data.slice(0, 3)); 
+        const response = await axios.get("http://localhost:8080/Recommendations");
+        setRecommendedBooks(response.data || []); 
       } catch (error) {
         console.log("Could not load recommendations:", error.message);
       }
