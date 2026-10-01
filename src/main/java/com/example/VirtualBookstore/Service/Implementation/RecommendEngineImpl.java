@@ -9,6 +9,7 @@ import com.example.VirtualBookstore.Service.Interface.ItemBasedCF;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -35,7 +36,6 @@ public class RecommendEngineImpl implements RecommendEngine {
         // Step 3: Get current user's predictions
         Map<Integer, Double> predictedRatings = allPredictions.get(userId);
 
-        // Option B: Don't fail for new users without ratings — return empty list
         if (predictedRatings == null || predictedRatings.isEmpty()) {
             return Collections.emptyList();
         }
