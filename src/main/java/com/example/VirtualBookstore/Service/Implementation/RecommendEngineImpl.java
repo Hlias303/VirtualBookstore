@@ -35,6 +35,11 @@ public class RecommendEngineImpl implements RecommendEngine {
         // Step 3: Get current user's predictions
         Map<Integer, Double> predictedRatings = allPredictions.get(userId);
 
+        // Option B: Don't fail for new users without ratings — return empty list
+        if (predictedRatings == null || predictedRatings.isEmpty()) {
+            return Collections.emptyList();
+        }
+
         // Step 4: Get books already rated by the user
         List<UserBook> userBooks = userBookRepo.findByUserId(userId);
         Set<Integer> ratedBookIds = userBooks.stream()
