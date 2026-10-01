@@ -6,6 +6,7 @@ import com.example.VirtualBookstore.Repo.BookRepo;
 import com.example.VirtualBookstore.Repo.UserBookRepo;
 import com.example.VirtualBookstore.Service.Interface.RecommendEngine;
 import com.example.VirtualBookstore.Service.Interface.ItemBasedCF;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,17 +15,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class RecommendEngineImpl implements RecommendEngine {
 
     private final ItemBasedCF slopeOne;
     private final BookRepo bookRepo;
     private final UserBookRepo userBookRepo;
-
-    public RecommendEngineImpl(ItemBasedCF slopeOne, BookRepo bookRepo, UserBookRepo userBookRepo) {
-        this.slopeOne = slopeOne;
-        this.bookRepo = bookRepo;
-        this.userBookRepo = userBookRepo;
-    }
 
     @Override
     public List<Books> getRecommendationsForUser(int userId, int limit) {

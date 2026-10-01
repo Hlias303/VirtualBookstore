@@ -7,6 +7,7 @@ import com.example.VirtualBookstore.Repo.BookRepo;
 import com.example.VirtualBookstore.Repo.UserBookRepo;
 import com.example.VirtualBookstore.Repo.UserRepo;
 import com.example.VirtualBookstore.Service.Interface.UserBookService;
+import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -14,17 +15,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class UserBookServiceImpl implements UserBookService {
 
     private final UserBookRepo repo;
     private final UserRepo userRepo;
     private final BookRepo bookRepo;
-
-    public UserBookServiceImpl(UserBookRepo repo, UserRepo userRepo, BookRepo bookRepo) {
-        this.repo = repo;
-        this.userRepo = userRepo;
-        this.bookRepo = bookRepo;
-    }
 
     @Override
     public List<UserBook> ShowUserBooks() {
@@ -36,7 +32,6 @@ public class UserBookServiceImpl implements UserBookService {
         Books book = bookRepo.findById(bookId)
                 .orElseThrow(() -> new RuntimeException("Book not found"));
 
-        // We use Authentication to get the current user object that want to review
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         User user = userRepo.findByUsername(name);
@@ -48,7 +43,6 @@ public class UserBookServiceImpl implements UserBookService {
 
     @Override
     public UserBook ShowUserBook(int bookId) {
-        // We use Authentication to get the current user object that want to review
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         User user = userRepo.findByUsername(name);

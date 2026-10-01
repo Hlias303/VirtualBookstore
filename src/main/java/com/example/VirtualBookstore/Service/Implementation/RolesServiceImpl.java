@@ -4,20 +4,17 @@ import com.example.VirtualBookstore.Model.User;
 import com.example.VirtualBookstore.Repo.RolesRepo;
 import com.example.VirtualBookstore.Repo.UserRepo;
 import com.example.VirtualBookstore.Service.Interface.RolesService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class RolesServiceImpl implements RolesService {
 
     private final RolesRepo roles_repo;
     private final UserRepo user_repo;
-
-    public RolesServiceImpl(RolesRepo roles_repo, UserRepo user_repo) {
-        this.roles_repo = roles_repo;
-        this.user_repo = user_repo;
-    }
 
     @Override
     public void SaveUser(User user) throws Exception {

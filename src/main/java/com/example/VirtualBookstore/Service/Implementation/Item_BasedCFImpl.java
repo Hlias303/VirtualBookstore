@@ -7,23 +7,19 @@ import com.example.VirtualBookstore.Repo.BookRepo;
 import com.example.VirtualBookstore.Repo.UserBookRepo;
 import com.example.VirtualBookstore.Repo.UserRepo;
 import com.example.VirtualBookstore.Service.Interface.ItemBasedCF;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
+@AllArgsConstructor
 public class Item_BasedCFImpl implements ItemBasedCF {
 
     private final UserBookRepo userBookRepo;
     private final UserRepo userRepo;
     private final BookRepo bookRepo;
-
-    public Item_BasedCFImpl(UserBookRepo userBookRepo, UserRepo userRepo, BookRepo bookRepo) {
-        this.userBookRepo = userBookRepo;
-        this.userRepo = userRepo;
-        this.bookRepo = bookRepo;
-    }
 
     // List<UserBook> userBooks;
     private Map<Integer, Map<Integer, Double>> userBookMap = new HashMap<>();

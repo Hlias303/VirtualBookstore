@@ -16,14 +16,12 @@ import java.util.Optional;
 public interface UserBookRepo extends JpaRepository<UserBook, Integer> {
 
     /**
-     * Creates a new UserBook entry linked to an existing user and book.
-     * Called when a user borrows or adds a new book to their profile.
+     * Finds a UserBook entry associated with the given user.
      *
-     * @param userBook the UserBook to merge/create
-     * @param user     the User entity to link with
-     * @return the newly created UserBook entry
+     * @param user the User entity to match against
+     * @return the UserBook entry associated with the user
      */
-    UserBook createUserBook(UserBook userBook, User user);
+    UserBook user(User user);
 
     /**
      * Retrieves the distinct set of all book IDs that have been associated with any user.

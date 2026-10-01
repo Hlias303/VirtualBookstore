@@ -3,7 +3,6 @@ package com.example.VirtualBookstore.Repo;
 import com.example.VirtualBookstore.Model.User;
 import com.example.VirtualBookstore.Model.UserBook;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -27,10 +26,10 @@ public interface UserRepo extends JpaRepository<User, Integer> {
     /**
      * Checks whether a user with the given username already exists in the database.
      * Used during registration to prevent duplicate accounts.
+     * Spring Data derives the query from the method name: exists WHERE username = ?
      *
      * @param username the username to check for existence
      * @return true if a user with the given username exists, false otherwise
      */
-    @Query("select u from User u where name = ?1")
     boolean existsByusername(String username);
 }

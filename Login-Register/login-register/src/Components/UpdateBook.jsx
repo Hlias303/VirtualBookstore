@@ -103,9 +103,9 @@ export default function UpdateBook() {
         <input type='text' placeholder={book.price} value={Updatebook.price}
          onChange={handleInputChange} name='price'></input>
 
-        <label htmlFor="Description">Description</label>
+        <label htmlFor="description">Description</label>
         <textarea type='text' placeholder={book.description} value={Updatebook.description}
-         cols={20} rows={10} onChange={handleInputChange} name='Description'></textarea>
+         cols={20} rows={10} onChange={handleInputChange} name='description'></textarea>
 
         <label htmlFor='image'>Image</label>
         <input type='file' onChange={handleImageChange} name='image'></input>
