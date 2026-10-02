@@ -36,9 +36,16 @@ public class UserBookServiceImpl implements UserBookService {
         String name = auth.getName();
         User user = userRepo.findByUsername(name);
 
-        userbook.setBook(book);
-        userbook.setUser(user);
-        repo.save(userbook);
+        // Update the existing rating instead of inserting a duplicate row
+        UserBook existing = repo.findByUserIdAndBookId(user.getId(), bookId).orElse(null);
+        if (existing != null) {
+            existing.setSentiment(userbook.getSentiment());
+            repo.save(existing);
+        } else {
+            userbook.setBook(book);
+            userbook.setUser(user);
+            repo.save(userbook);
+        }
     }
 
     @Override

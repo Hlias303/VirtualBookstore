@@ -23,8 +23,8 @@ public class UserBookController {
     }
 
     @GetMapping("/UserBooks/{id}")
-    public UserBook getUserBook(@PathVariable int bookId) {
-        return userBookService.ShowUserBook(bookId);
+    public UserBook getUserBook(@PathVariable int id) {
+        return userBookService.ShowUserBook(id);
     }
 
     @PostMapping("/Books/AddSentiment")

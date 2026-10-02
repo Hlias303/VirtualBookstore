@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@Table(name = "user_book")
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserBook {

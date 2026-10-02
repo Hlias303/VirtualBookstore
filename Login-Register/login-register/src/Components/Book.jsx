@@ -7,11 +7,13 @@ import Stack from '@mui/material/Stack';
 import "../Styles/Book.css"
 import Cookies from 'universal-cookie'
 import { userContext } from '../Context/ContextProvider.jsx'
+import StarRating from '../helpers/StarRating.jsx'
 
 function Book() {
   const {id} = useParams();
   const [book, SetBook] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
+  const [myRating, SetMyRating] = useState(0);
 
   const navigate = useNavigate();
   const cookies = new Cookies();
@@ -67,6 +69,25 @@ function Book() {
     FetchBook();
   }, [id]);
 
+  // Load the logged-in user's existing rating for this book (if any)
+  useEffect(() => {
+    if (!role || !id) return;
+    const loadMyRating = async () => {
+      try {
+        const token = cookies.get("token");
+        const ratingResponse = await axios.get(`http://localhost:8080/UserBooks/${id}`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (ratingResponse.data && ratingResponse.data.sentiment) {
+          SetMyRating(ratingResponse.data.sentiment);
+        }
+      } catch (e) {
+        // Not rated yet (or fetch failed) - keep 0 stars
+      }
+    };
+    loadMyRating();
+  }, [id, role]);
+
   const DeleteBook = async () => {
     const token = cookies.get("token");
     try {
@@ -85,6 +106,23 @@ function Book() {
 
   const handleEditClick = () => {
     navigate(`/BookUpdate/${id}`);
+  };
+
+  // Save the user's star rating for this book
+  const handleRate = async (newValue) => {
+    if (!newValue) return; // ignore clearing
+    SetMyRating(newValue);
+    const token = cookies.get("token");
+    try {
+      await axios.post(
+        "http://localhost:8080/Books/AddSentiment",
+        { sentiment: newValue, book: { id: parseInt(id, 10) } },
+        { headers: { 'Authorization': `Bearer ${token}` } }
+      );
+    } catch (error) {
+      console.error("Failed to save rating:", error.response?.status || error.message);
+      alert("Failed to save your rating. Please try again.");
+    }
   };
 
   if (!book) {
@@ -120,6 +158,14 @@ function Book() {
 
             <p className="description-label">BOOK DESCRIPTION:</p>
             <p className="description-content">{book.description || "No description available."}</p>
+
+            {/* Star rating bar - interactive when logged in, read-only otherwise */}
+            <StarRating
+              label="Your Rating:"
+              value={myRating}
+              onChange={role ? handleRate : undefined}
+              size="medium"
+            />
           </div>
 
           <div className="book-price">

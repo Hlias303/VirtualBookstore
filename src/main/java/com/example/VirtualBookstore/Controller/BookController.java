@@ -77,7 +77,7 @@ public class BookController {
         return service.search(keyword);
     }
 
-    @PostMapping("/Recommendations")
+    @GetMapping("/Recommendations")
     public List<Books> getRecommendations() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null && auth.getPrincipal() instanceof UserPrincipal) {
